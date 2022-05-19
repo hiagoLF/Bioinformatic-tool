@@ -1,0 +1,4 @@
+"","Family","Protein_Name","Protein_ID","Localization","Topology","TM_Segment_Helix","Hydrophobic_Thickness_or_Depth","Tilt_Angle","deltaGfold","kcal_mol"
+"1","Leukocyte common antigen","Receptor-type tyrosine-protein phosphata...","PTPRC_HUMAN","Plasma memb.","Out","576- 599 ( 572- 605)","34.5","20","-22.9","-30.2"
+"2","Protein-tyrosine phosphatase, class 2A/5","Receptor-type tyrosine-protein phosphata...","PTPRD_HUMAN","Plasma memb.","Out","1268-1290 (1262-1300)","34.4","10","-23.0","-31.2"
+"3","Protein-tyrosine phosphatase, class 2A/5","Receptor-type tyrosine-protein phosphata...","PTPRF_HUMAN","Plasma memb.","Out","1262-1284 (1259-1288)","34.4","10","-26.9","-34.3"

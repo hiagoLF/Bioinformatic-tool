@@ -9,7 +9,7 @@ from conversors import convertToPercentageList
 from config import enviroment
 from generate.table import generateTableWithDictionary
 from predict.reasons import getReasonsBettweenAminoacidsFrequencies
-from predictions import findProteinsInformations, getAminoacidsFrequencesInPercentage
+from predictions import findProteinsInformations, getAminoacidsCoupleFrequencesInPercentage, getAminoacidsFrequencesInPercentage
 from request import requestProteinsFromUniprot
 from fasta import createProteinsDictionaryFromFasta
 from tables import createTableForProteinsFragments
@@ -79,8 +79,9 @@ for aminoacidLetter in aminoacids.aminoacidsLettersList:
 fragmentAminoacidCoupleDictionary = {}
 for aminoacidCouple in aminoacidsCouples:
    for fragmentKey, fragment in enumerate(proteinsFragments):
+      currentFragmentLenth = len(fragment)
       for aminoacidKey, aminoacidLetter in enumerate(fragment):
-         nextAminoacidLetter = fragment[aminoacidKey + 1] if len(fragment) > aminoacidKey + 1 else ''
+         nextAminoacidLetter = fragment[aminoacidKey + 1] if currentFragmentLenth > aminoacidKey + 1 else ''
          if (aminoacidLetter + nextAminoacidLetter == aminoacidCouple):
             if(aminoacidCouple in fragmentAminoacidCoupleDictionary):
                fragmentAminoacidCoupleDictionary[aminoacidCouple] += 1
@@ -106,8 +107,9 @@ print('10. fragment-aminoacid-couple-frequency.png file generated')
 proteinRestAminoacidCoupleDictionary = {}
 for aminoacidCouple in aminoacidsCouples:
    for proteinRestKey, proteinRest in enumerate(proteinsRests):
+      currentFragmentLength = len(proteinRest)
       for aminoacidKey, aminoacidLetter in enumerate(proteinRest):
-         nextAminoacidLetter = proteinRest[aminoacidKey + 1] if len(proteinRest) > aminoacidKey + 1 else ''
+         nextAminoacidLetter = proteinRest[aminoacidKey + 1] if currentFragmentLength > aminoacidKey + 1 else ''
          if (aminoacidLetter + nextAminoacidLetter == aminoacidCouple):
             if(aminoacidCouple in proteinRestAminoacidCoupleDictionary):
                proteinRestAminoacidCoupleDictionary[aminoacidCouple] += 1
@@ -140,5 +142,17 @@ generateTableWithDictionary(
    'aminoacids_reasons'
 )
 
-print('12. Process Finished')
+
+proteinsRestsAminoacidCoupleFrequencies = getAminoacidsCoupleFrequencesInPercentage(proteinsRests)
+proteinsFragmentsAminoacidCoupleFrequencies = getAminoacidsCoupleFrequencesInPercentage(proteinsFragments)
+
+aminoacidsReasons = getReasonsBettweenAminoacidsFrequencies(proteinsFragmentsAminoacidCoupleFrequencies, proteinsRestsAminoacidCoupleFrequencies)
+generateTableWithDictionary(
+   aminoacidsReasons, 
+   'AMINO_ACID_COUPLE',
+   'REASON',
+   'aminoacids_couples_reasons'
+)
+
+print('13. Process Finished')
 

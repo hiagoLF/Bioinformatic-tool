@@ -1,5 +1,6 @@
 import re
 from collections import Counter
+from aminoacids import getAminoacidCouples
 
 from conversors import convertDictionaryValuesToPercentage
 
@@ -48,4 +49,21 @@ def getAminoacidsFrequencesInPercentage(sequences):
         aminoacidsFrequenciesDictionary[aminoacid] = 1
   
   return convertDictionaryValuesToPercentage(aminoacidsFrequenciesDictionary)
+
+
+def getAminoacidsCoupleFrequencesInPercentage(sequences):
+  aminoacidsCoupleFrequenciesDictionary = {}
+
+  for sequence in sequences:
+    sequenceSize = len(sequence)
+    for key, aminoacid in enumerate(sequence):
+      if(key == sequenceSize - 1):
+        continue
+      currentKeyToTest = aminoacid + sequence[key + 1]
+      if(currentKeyToTest in aminoacidsCoupleFrequenciesDictionary):
+        aminoacidsCoupleFrequenciesDictionary[currentKeyToTest] += 1
+      else:
+        aminoacidsCoupleFrequenciesDictionary[currentKeyToTest] = 1
+  
+  return convertDictionaryValuesToPercentage(aminoacidsCoupleFrequenciesDictionary)
 
